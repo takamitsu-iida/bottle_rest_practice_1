@@ -128,6 +128,8 @@ from tinydb import TinyDB
 # GET/POST/DELETE/PUTの使い分けを確認します。
 
 # テストデータとしてユーザ情報を保管するデータベース
+if not os.path.exists(here('./data')):
+  os.mkdir(here('./data'))
 db = TinyDB(here('./data/users.json'))
 
 # データベースにクエリをかけるためのオブジェクト
