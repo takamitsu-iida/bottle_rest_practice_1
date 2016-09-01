@@ -3,7 +3,7 @@
 u"""WebフレームワークBottleスクリプト.
 
 ウェブサーバ機能に加えて、REST APIを提供します。
-動作に必要なモジュールは./libに置いてあるのでインストール不要。
+動作に必要なモジュールは./py-libに置いてあるのでインストール不要。
 
 依存外部モジュール
   bottle
@@ -39,9 +39,9 @@ def here(path=''):
   u"""相対パスを絶対パスに変換して返却します."""
   return os.path.abspath(os.path.join(os.path.dirname(__file__), path))
 
-# ./libフォルダにおいたpythonスクリプトを読みこませるための処理
-sys.path.append(here("./lib"))
-sys.path.append(here("./lib/site-packages"))
+# ./py-libフォルダにおいたpythonスクリプトを読みこませるための処理
+sys.path.append(here("./py-lib"))
+sys.path.append(here("./py-lib/site-packages"))
 
 if __server__ == "gevent":
   # geventを使う場合のお作法
