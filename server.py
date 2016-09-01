@@ -84,9 +84,6 @@ from bottle import template
 # 500 Internal Server Error サーバで障害が発生
 # 504 Service Unavailable 過負荷やメンテナンス等により一時的に処理ができない
 
-# bottleのデバッグを有効にして、エラー時に詳細な情報を出力する
-bottle.debug(True)
-
 import jsonpickle
 jsonpickle.set_preferred_backend('json')
 jsonpickle.set_encoder_options('json', sort_keys=False, indent=2)
@@ -468,6 +465,7 @@ def main():
       pass
   else:
     server = bottle.run(host=BOTTLE_HOSTNAME, port=BOTTLE_PORT, debug=True, reloader=True)
+    sys.exit(0)
 
 if __name__ == '__main__':
   main()
