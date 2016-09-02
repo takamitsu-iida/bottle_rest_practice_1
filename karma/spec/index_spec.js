@@ -20,6 +20,9 @@ describe('基本動作テスト', function() {
   var userResource;
   var restController;
 
+  var userList = {users: [{name: 'aaa'}, {name: 'bbb'}]};
+
+
   beforeEach(function(){
     // モジュールを有効化
     module(iida.moduleName);
@@ -35,11 +38,8 @@ describe('基本動作テスト', function() {
     $httpBackend = $injector.get('$httpBackend');
 
     // 応答の設定
-    var a = {users: [{name: 'aaa'}, {name: 'bbb'}]};
-    $httpBackend.when('GET', 'http://server:80/rest/users').respond(a);
-    $httpBackend.when('GET', 'http://server:80/rest/users/').respond(a);
-    $httpBackend.when('GET', '/rest/users').respond(a);
-    $httpBackend.when('GET', '/rest/users/').respond(a);
+    $httpBackend.when('GET', 'http://server:80/rest/users').respond(userList);
+    $httpBackend.when('GET', 'http://server:80/rest/users/').respond(userList);
 
     // ルートスコープ
     $rootScope = $injector.get('$rootScope');
@@ -60,6 +60,7 @@ describe('基本動作テスト', function() {
       'userResource': userResource
     };
 
+    // コントローラのインスタンス化
     restController = $controller('restController', arg);
 
   }));
