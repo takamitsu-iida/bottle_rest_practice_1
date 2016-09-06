@@ -1,5 +1,3 @@
-/* global angular, iida */
-
 describe('基本動作テスト', function() {
 
   // angularの$filter
@@ -20,10 +18,22 @@ describe('基本動作テスト', function() {
   var userResource;
   var restController;
 
-  var userList = {users: [{name: 'aaa'}, {name: 'bbb'}]};
+  // RESTの応答
+  var userList = {
+    users: [{
+      name: 'aaa'
+    }, {
+      name: 'bbb'
+    }]
+  };
 
+  var queryResponse = {
+    status: 'SUCCESS',
+    message: '',
+    users: userList
+  };
 
-  beforeEach(function(){
+  beforeEach(function() {
     // モジュールを有効化
     module(iida.moduleName);
   });
@@ -38,11 +48,12 @@ describe('基本動作テスト', function() {
     $httpBackend = $injector.get('$httpBackend');
 
     // 応答の設定
-    $httpBackend.when('GET', 'http://server:80/rest/users').respond(userList);
-    $httpBackend.when('GET', 'http://server:80/rest/users/').respond(userList);
+    $httpBackend.when('GET', 'http://server:80/rest/users').respond(queryResponse);
 
     // ルートスコープ
     $rootScope = $injector.get('$rootScope');
+
+    // コントローラ
     $controller = $injector.get('$controller');
 
     // テスト対象のコントローラを初期化する
@@ -72,37 +83,35 @@ describe('基本動作テスト', function() {
   });
 
   // angularの$filterの動作を確認
-  it('フィルタテスト', function(){
-
+  it('filterフィルタの動作チェック', function() {
     var arr = ['iida', 'takamitsu'];
-
     var filter = $filter('filter');
-
     var searchString = 'iid';
-
     var filtered = filter(arr, searchString);
-
     expect(filtered).toEqual(['iida']);
-
   });
 
 
-  it('コントローラのテスト', function(){
+  it('コントローラのテスト', function() {
 
+    // 初期状態ではundefined
+    expect(restController.users).toBe(undefined);
+
+    // query()を投げる
     restController.query();
 
-    console.log(' before flush ' + restController.users);
-
+    // モックが擬似応答を返す
     $httpBackend.flush();
 
-    console.log(' after flush ' + restController.users);
+    // 値が期待通りセットされているか、確認する
+    expect(restController.users).toEqual(userList);
 
   });
 
 
-  afterEach(function(){
-    // $httpBackend.verifyNoOutstandingExpectation();
-    // $httpBackend.verifyNoOutstandingRequest();
+  afterEach(function() {
+    $httpBackend.verifyNoOutstandingExpectation();
+    $httpBackend.verifyNoOutstandingRequest();
   });
 
 });

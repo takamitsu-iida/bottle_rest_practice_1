@@ -1,23 +1,23 @@
 /* global angular, iida */
-/* jslint browser:true, continue:true, devel:true, indent:2, maxerr:50, newcap:true, nomen:true, plusplus:true, regexp:true, sloppy:true, vars:true, white:true bitwise:true, sub:true, node:true, es5:true */
-
 (function() {
+  // モジュール名iidaはiida.startup.jsでグローバル変数として定義している
   var moduleName = iida.moduleName;
 
-  // AngularJS
-  // モジュールを登録
+  // AngularJSのモジュールを登録
   angular.module(moduleName, [
     'ngResource',
+    'ngAnimate',
     'ui.bootstrap',
-    'ui.router',
-    'ngAnimate'
+    'ui.router'
   ]);
 
+  // $log設定
   // $log.debug();によるデバッグメッセージの表示・非表示設定
   angular.module(moduleName).config(['$logProvider', function($logProvider) {
     $logProvider.debugEnabled(false);
   }]);
 
+  // ディレクティブ定義
   // 戻るボタン <back></back>
   angular.module(moduleName).directive('back', ['$window', function($window) {
     return {

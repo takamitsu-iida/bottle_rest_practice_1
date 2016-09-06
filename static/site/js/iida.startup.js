@@ -1,5 +1,3 @@
-/* jslint browser:true, continue:true, devel:true, indent:2, maxerr:50, newcap:true, nomen:true, plusplus:true, regexp:true, sloppy:true, vars:true, white:true bitwise:true, sub:true, node:true */
-
 // 名前空間を定義する
 (function() {
   // このthisはグローバル空間
